@@ -7,17 +7,29 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 			crossorigin="anonymous"></script>
+	<style>
+       #map {
+        height: 550px;
+        width: 100%;
+       }
+    </style>
 </head>
 <body>
 	<div class="container-fluid">
+		<br>
+		<h1 class="row justify-content-center">Let's search some earthquakes!</h1>
 		<div class="row justify-content-center">
-			<h3>Please enter a city:</h3>
-			<input type="input" name="hi">
+			<div class="input-group">
+			  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" id="place-search">
+			</div>
 		</div>
-		<div class="row justify-content-center">
-			
+		<br>
+		<div class="row justify-content-center" id="map">
 		</div>
 	</div>
 	<script src="main.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeFrgHDWqMvP54mj5K9E6Bug9WL5Y_0GI&libraries=places&callback=initMap">
+    </script>
 </body>
 </html>
