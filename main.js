@@ -23,10 +23,7 @@ function showEarthquakes(jsonObj) {
 	var earth = jsonObj['earthquakes'];
 	// console.log(earth.length);
 	for (i = 0; i < earth.length; i++) {
-		count++;
-		latit.push(earth[i].lng);
-		longi.push(earth[i].lat);
-		addMarker({lat:earth[i].lat, lng:earth[i].lng});
+		addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude);
 	}
 	// console.log(longi,"-",latit);
 }
@@ -37,11 +34,15 @@ function showEarthquakes(jsonObj) {
 			center: uluru
         });
 
-    function addMarker(coords){
+    function addMarker(coords, date, mag){
      		marker = new google.maps.Marker({
        	position: coords,
        	map: map,
-       	title: "click me"
+       	title: date,
+       	icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: mag
+          }
      	});
     }
 }
