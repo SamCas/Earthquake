@@ -16,12 +16,10 @@ function showEarthquakes(jsonObj) {
 	// console.log(earth.length);
 	for (var i = 0; i < earth.length; i++) {
 
-		var myRow = document.createElement('li');
-		var timedate = earth[i].datetime;
-
-		myRow.append(timedate);
-		document.getElementById('earthquakes').append(myRow);
-
+		var longitude = earth[i].lng;
+		var latitude = earth[i].lat;
+		console.log(longitude,"-",latitude);
+		
 	}
 }
 
@@ -34,6 +32,7 @@ function initMap() {
 
 	var input = document.getElementById('place-search');
     var searchBox = new google.maps.places.SearchBox(input);
+
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     map.addListener('bounds_changed', function() {
