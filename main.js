@@ -18,26 +18,26 @@ function initMap() {
 
 	}	
 
-	function showEarthquakes(jsonObj) {
-		
-		var earth = jsonObj['earthquakes'];
-		// console.log(earth.length);
-		for (i = 0; i < earth.length; i++) {
-			// addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
+		function showEarthquakes(jsonObj) {
+				
+			var earth = jsonObj['earthquakes'];
+			// console.log(earth.length);
+			for (i = 0; i < earth.length; i++) {
+				// addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
+			}
+			// console.log(longi,"-",latit);
 		}
-		// console.log(longi,"-",latit);
-	}
 
-	  var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
+	  	var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 38.322, lng: 142.369},
           zoom: 4,
           mapTypeId: 'roadmap'
-        });
+      });
 
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('place-search');
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	     // Create the search box and link it to the UI element.
+	     var input = document.getElementById('place-search');
+	     var searchBox = new google.maps.places.SearchBox(input);
+	     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         // Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
@@ -62,7 +62,7 @@ function initMap() {
 
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
-         
+          console.log(bounds);
           places.forEach(function(place) {
             if (!place.geometry) {
               console.log("Returned place contains no geometry");
@@ -74,7 +74,7 @@ function initMap() {
               origin: new google.maps.Point(0, 0),
               anchor: new google.maps.Point(17, 34),
               scaledSize: new google.maps.Size(25, 25)
-            };
+            };									
 
             // Create a marker for each place.
             markers.push(new google.maps.Marker({
@@ -91,12 +91,7 @@ function initMap() {
 		          fillColor: '#FF0000',
 		          fillOpacity: 0.35,
 		          map: map,
-		          bounds: {
-		            north: 70.2195,
-		            south: -30.2195,
-		            east: 30.8688,
-		            west: -40.8688
-		          }
+		          bounds: bounds
 		        });
 
             if (place.geometry.viewport) {
