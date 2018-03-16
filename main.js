@@ -30,7 +30,7 @@ function initMap() {
 
 	  var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -33.8688, lng: 151.2195},
-          zoom: 13,
+          zoom: 4,
           mapTypeId: 'roadmap'
         });
 
@@ -62,7 +62,7 @@ function initMap() {
 
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
-          console.log(bounds);
+         
           places.forEach(function(place) {
             if (!place.geometry) {
               console.log("Returned place contains no geometry");
@@ -83,6 +83,21 @@ function initMap() {
               title: place.name,
               position: place.geometry.location
             }));
+            
+	         var rectangle = new google.maps.Rectangle({
+		          strokeColor: '#FF0000',
+		          strokeOpacity: 0.8,
+		          strokeWeight: 2,
+		          fillColor: '#FF0000',
+		          fillOpacity: 0.35,
+		          map: map,
+		          bounds: {
+		            north: 70.2195,
+		            south: -30.2195,
+		            east: 30.8688,
+		            west: -40.8688
+		          }
+		        });
 
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
