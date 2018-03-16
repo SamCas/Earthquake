@@ -8,12 +8,15 @@ request.open('GET', requestURL);
 request.responseType = 'json';
 request.send();
 
-request.onload = function() {
+
+function initMap() {
+
+	request.onload = function() {
 
 	var earthquakesList = request.response;
 	showEarthquakes(earthquakesList);
 
-}	
+	}	
 
 function showEarthquakes(jsonObj) {
 	
@@ -23,52 +26,23 @@ function showEarthquakes(jsonObj) {
 		count++;
 		latit.push(earth[i].lng);
 		longi.push(earth[i].lat);
+		addMarker({lat:earth[i].lat, lng:earth[i].lng});
 	}
 	// console.log(longi,"-",latit);
 }
 
-function initMap() {
-
 	var uluru = {lat: 38.322, lng: 142.369};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
+       	var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 4,
+			center: uluru
         });
 
-    var infowindow = new google.maps.InfoWindow();
-    var marker;
-
-    for (var i = 0; i < 9; i++) {  
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(Math.random(), Math.random()),
-        map: map,
-        title: "click me " + i
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent('Hello');
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-
+    function addMarker(coords){
+     		marker = new google.maps.Marker({
+       	position: coords,
+       	map: map,
+       	title: "click me"
+     	});
     }
-    // console.log(longi, "-", latit);
-
-	// for (var i = 0; i < 9; i++) {
-
-	// 	var marker = new google.maps.Marker({
-	// 		position: new google.maps.LatLng(latit[i], long[i]),
-	// 		map = map,
-	// 		title: 'earthquakes'
-	// 	});
-	
-	// }
-
-    // for (i = 0; i < locations.length; i++) {  
-    //   marker = new google.maps.Marker({
-    //     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-    //     map: map
-    //   });
-  }
+}
 
