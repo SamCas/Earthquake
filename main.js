@@ -1,3 +1,30 @@
+var requestURL = 'http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=samdino';
+var request = new XMLHttpRequest();
+
+request.open('GET', requestURL);
+request.responseType = 'json';
+request.send();
+
+request.onload = function() {
+  var earthquakesList = request.response;
+  showEarthquakes(earthquakesList);
+}
+
+function showEarthquakes(jsonObj) {
+	
+	var earth = jsonObj['earthquakes'];
+	// console.log(earth.length);
+	for (var i = 0; i < earth.length; i++) {
+
+		var myRow = document.createElement('li');
+		var timedate = earth[i].datetime;
+
+		myRow.append(timedate);
+		document.getElementById('earthquakes').append(myRow);
+
+	}
+}
+
 function initMap() {
 
 	var map = new google.maps.Map(document.getElementById('map'), {
