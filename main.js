@@ -1,27 +1,32 @@
 var requestURL = 'http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=samdino';
 var request = new XMLHttpRequest();
+var latit = [];
+var longi = [];
 
 request.open('GET', requestURL);
 request.responseType = 'json';
 request.send();
 
 request.onload = function() {
-  var earthquakesList = request.response;
-  showEarthquakes(earthquakesList);
-}
 
-function showEarthquakes(jsonObj) {
-	
-	var earth = jsonObj['earthquakes'];
-	// console.log(earth.length);
-	for (var i = 0; i < earth.length; i++) {
+	  var earthquakesList = request.response;
+	  showEarthquakes(earthquakesList);
 
-		var longitude = earth[i].lng;
-		var latitude = earth[i].lat;
-		console.log(longitude,"-",latitude);
-		
 	}
-}
+
+	function showEarthquakes(jsonObj) {
+		
+		var earth = jsonObj['earthquakes'];
+		// console.log(earth.length);
+		for (var i = 0; i < earth.length; i++) {
+
+			latit = earth[i].lng;
+			longi = earth[i].lat;
+
+			console.log(longi,"-",latit);
+			
+		}
+	}
 
 function initMap() {
 
