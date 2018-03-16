@@ -1,5 +1,6 @@
 var requestURL = 'http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=samdino';
 var request = new XMLHttpRequest();
+var count = 0;
 var latit = [];
 var longi = [];
 
@@ -12,21 +13,20 @@ request.onload = function() {
 	  var earthquakesList = request.response;
 	  showEarthquakes(earthquakesList);
 
+	}	
+
+function showEarthquakes(jsonObj) {
+	
+	var earth = jsonObj['earthquakes'];
+	// console.log(earth.length);
+	for (var i = 0; i < earth.length; i++) {
+		count++;
+		latit.push(earth[i].lng);
+		longi.push(earth[i].lat);
 	}
+	// console.log(longi,"-",latit);
 
-	function showEarthquakes(jsonObj) {
-		
-		var earth = jsonObj['earthquakes'];
-		// console.log(earth.length);
-		for (var i = 0; i < earth.length; i++) {
-
-			latit = earth[i].lng;
-			longi = earth[i].lat;
-
-			console.log(longi,"-",latit);
-			
-		}
-	}
+}
 
 function initMap() {
 
@@ -34,6 +34,21 @@ function initMap() {
           center: {lat: -33.866, lng: 151.196},
           zoom: 15
 	});
+
+	// console.log(longi, "-", latit);
+	// newlat = Math.floor((Math.random() * 100) + 1);
+	// newlng = Math.floor((Math.random() * 100) + 1);
+
+	// for (var i = 0; i < 9; i++) {
+	// 	var myLatlng = new google.maps.LatLng(, );
+
+	// 	var newMarker = new google.maps.Marker({
+	// 		position: myLatlng,
+	// 		map = map,
+	// 		title: 'earthquakes'
+	// 	});
+	
+	// }
 
 	var input = document.getElementById('place-search');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -59,6 +74,7 @@ function initMap() {
       markers = [];
 
       var bounds = new google.maps.LatLngBounds();
+
       places.forEach(function(place) {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
