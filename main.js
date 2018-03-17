@@ -97,10 +97,10 @@ function initMap() {
             // console.log(markers[0].position.lng());
             // console.log(markers[0].position.lat());
 
-            var north = markers[0].position.lat() + 3;
-				var south = markers[0].position.lat() - 3;
-				var east = markers[0].position.lng() + 3;
-				var west = markers[0].position.lng() - 3;
+            var north = markers[0].position.lat() + 1.4;
+				var south = markers[0].position.lat() - 1.4;
+				var east = markers[0].position.lng() + 1.4;
+				var west = markers[0].position.lng() - 1.4;
 
             rectangles.push(new google.maps.Rectangle({
             	strokeColor: '#FF0000',
