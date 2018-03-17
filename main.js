@@ -1,27 +1,5 @@
 function initMap() {
-
-	// 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
-	var north = 0.038777;
-	var south = -18.65232900000001;
-	var east =49.4483;
-	var west = -89.38670009999998;
-
-	var requestURL = 'http://api.geonames.org/earthquakesJSON?north=' + north + '&south=' + south + '&east=' + east + '&west=' + west + '&username=samdino';
-	var request = new XMLHttpRequest();
-	var count = 0;
-	var latit = [];
-	var longi = [];
-
-	request.open('GET', requestURL);
-	request.responseType = 'json';
-	request.send();
-
-	request.onload = function() {
-
-	var earthquakesList = request.response;
-	showEarthquakes(earthquakesList);
-
-	}	
+	
 
 		function showEarthquakes(jsonObj) {
 				
@@ -58,20 +36,22 @@ function initMap() {
 					});
 			}
 
-	     // Create the search box and link it to the UI element.
+	     
 	     var input = document.getElementById('place-search');
 	     var searchBox = new google.maps.places.SearchBox(input);
 	     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-        // Bias the SearchBox results towards current map's viewport.
+        
         map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
+
+        	searchBox.setBounds(map.getBounds());
+
         });
 
         var markers = [];
         var rectangles = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
+        
+        
         searchBox.addListener('places_changed', function() {
           var places = searchBox.getPlaces();
 
@@ -79,7 +59,7 @@ function initMap() {
             return;
           }
 
-          // Clear out the old markers.
+          
           markers.forEach(function(marker) {
             marker.setMap(null);
           });
@@ -87,10 +67,10 @@ function initMap() {
           markers = [];
           rectangles = [];
 
-          // For each place, get the icon, name and location.
+          
           var bounds = new google.maps.LatLngBounds();
-          console.log(bounds);
-          console.log(bounds.b.b, bounds.b.f, bounds.f.b, bounds.f.f);
+          // console.log(bounds);
+          // console.log(bounds.b.b, bounds.b.f, bounds.f.b, bounds.f.f);
           places.forEach(function(place) {
             if (!place.geometry) {
               console.log("Returned place contains no geometry");
@@ -104,7 +84,7 @@ function initMap() {
               scaledSize: new google.maps.Size(25, 25)
             };									
 
-            // Create a marker for each place.
+           
             markers.push(new google.maps.Marker({
               map: map,
               icon: icon,
@@ -112,6 +92,21 @@ function initMap() {
               position: place.geometry.location
             }));
             
+            // console.log(position);
+            console.log(bounds.getNorthEast().lat());
+            // console.log(markers[0].position.lng());
+            // console.log(markers[0].position.lat());
+
+            aNorth  =   google.maps.ControlPosition.TOP_CENTER;   
+   			aEast   =   google.maps.ControlPosition.RIGHT_CENTER;
+    			aSouth  =   google.maps.ControlPosition.BOTTOM_CENTER;
+    			aWest   =   google.maps.ControlPosition.LEFT_CENTER;
+
+            var north = aNorth;
+				var south = aEast;
+				var east = aSouth;
+				var west = aWest;
+
             rectangles.push(new google.maps.Rectangle({
             	strokeColor: '#FF0000',
 		         strokeOpacity: 0.8,
@@ -119,21 +114,35 @@ function initMap() {
 		         fillColor: '#FF0000',
 		         fillOpacity: 0.15,
 		         map: map,
-		         bounds: bounds
+		         bounds: {
+		         	north: north,
+		         	south: south,
+		         	east: east,
+		         	west: west
+		         }
             }));
 
-	         // var rectangle = new google.maps.Rectangle({
-		        //   strokeColor: '#FF0000',
-		        //   strokeOpacity: 0.8,
-		        //   strokeWeight: 2,
-		        //   fillColor: '#FF0000',
-		        //   fillOpacity: 0.35,
-		        //   map: map,
-		        //   bounds: bounds
-		        // });
+            // 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
+				
+
+				var requestURL = 'http://api.geonames.org/earthquakesJSON?north=' + north + '&south=' + south + '&east=' + east + '&west=' + west + '&username=samdino';
+				var request = new XMLHttpRequest();
+				var count = 0;
+				var latit = [];
+				var longi = [];
+
+				request.open('GET', requestURL);
+				request.responseType = 'json';
+				request.send();
+
+				request.onload = function() {
+
+				var earthquakesList = request.response;
+				showEarthquakes(earthquakesList);
+
+				}
 
             if (place.geometry.viewport) {
-              // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
             } else {
               bounds.extend(place.geometry.location);
@@ -142,20 +151,4 @@ function initMap() {
           map.fitBounds(bounds);
         });
       }
-
-
-
-	// function addMarker(coords, date, mag, depth, su){
- //  		marker = new google.maps.Marker({
- //    	position: coords,
- //    	map: map,
- //    	title: date,
- //    	icon: {
- //         path: google.maps.SymbolPath.CIRCLE,
- //         scale: mag
- //       }
- //  	});
-
-	// 	
-
 
