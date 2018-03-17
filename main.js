@@ -97,15 +97,10 @@ function initMap() {
             // console.log(markers[0].position.lng());
             // console.log(markers[0].position.lat());
 
-            aNorth  =   google.maps.ControlPosition.TOP_CENTER;   
-   			aEast   =   google.maps.ControlPosition.RIGHT_CENTER;
-    			aSouth  =   google.maps.ControlPosition.BOTTOM_CENTER;
-    			aWest   =   google.maps.ControlPosition.LEFT_CENTER;
-
-            var north = aNorth;
-				var south = aEast;
-				var east = aSouth;
-				var west = aWest;
+            var north = markers[0].position.lat() + 3;
+				var south = markers[0].position.lat() - 3;
+				var east = markers[0].position.lng() + 3;
+				var west = markers[0].position.lng() - 3;
 
             rectangles.push(new google.maps.Rectangle({
             	strokeColor: '#FF0000',
