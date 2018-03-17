@@ -1,4 +1,4 @@
-var requestURL = 'http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=samdino';
+var requestURL = 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=40.4483&west=-160.38670009999998&username=samdino';
 var request = new XMLHttpRequest();
 var count = 0;
 var latit = [];
@@ -34,6 +34,9 @@ function initMap() {
           mapTypeId: 'roadmap'
       });
 
+      var infowindow = new google.maps.InfoWindow();
+
+
       function addMarker(coords, date, mag, depth, su){
 			  		markerNew = new google.maps.Marker({
 			    	position: coords,
@@ -44,6 +47,10 @@ function initMap() {
 			         scale: mag
 			       }
 			  	});
+			  		google.maps.event.addListener(markerNew, 'click', function() {
+					  infowindow.setContent('<b>Date: </b>' + date + '<br>' +'<b>The magnitude was: </b>' + mag + '<br>' + '<b>Depth: </b>' + depth + ' km' + '<br>' + '<b>Source: </b>' + su);
+					  infowindow.open(map, this);
+					});
 			}
 
 	     // Create the search box and link it to the UI element.
@@ -78,6 +85,7 @@ function initMap() {
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
           console.log(bounds);
+          console.log(bounds.b.b, bounds.b.f, bounds.f.b, bounds.f.f);
           places.forEach(function(place) {
             if (!place.geometry) {
               console.log("Returned place contains no geometry");
@@ -143,11 +151,6 @@ function initMap() {
  //       }
  //  	});
 
-	// 	google.maps.event.addListener(marker, 'click', function() {
-	// 	  infowindow.setContent('<b>Date: </b>' + date + '<br>' +'<b>The magnitude was: </b>' + mag + '<br>' + '<b>Depth: </b>' + depth + ' km' + '<br>' + '<b>Source: </b>' + su);
-	// 	  infowindow.open(map, this);
-	// 	});
-
- //   }
+	// 	
 
 
