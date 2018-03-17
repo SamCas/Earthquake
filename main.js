@@ -1,5 +1,28 @@
+
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+var yyyy = today.getFullYear() - 1;
+
+var dateFormat = yyyy + '-' + mm + '-' + dd;
+
+var newRequestURL = 'http://api.geonames.org/earthquakesJSON?date=' + dateFormat + '&north=180&south=-180&east=90&west=-90&username=samdino';
+var newRequest = new XMLHttpRequest();
+newRequest.open('GET', newRequestURL);
+newRequest.responseType = 'json';
+newRequest.send();
+
+function bonusAnswer(bonusEarthquakes) {
+	var list = bonusEarthquakes['earthquakes'];
+	// var sortedList = sortBy(list, 'magnitude');
+
+	for (i = 0; i < 10; i++) {
+		console.log(list[i].magnitude);
+	}
+}
+
 function initMap() {
-	
 
 		function showEarthquakes(jsonObj) {
 				
@@ -35,7 +58,6 @@ function initMap() {
 					  infowindow.open(map, this);
 					});
 			}
-
 	     
 	     var input = document.getElementById('place-search');
 	     var searchBox = new google.maps.places.SearchBox(input);
@@ -50,7 +72,6 @@ function initMap() {
 
         var markers = [];
         var rectangles = [];
-        
         
         searchBox.addListener('places_changed', function() {
           var places = searchBox.getPlaces();
@@ -67,7 +88,6 @@ function initMap() {
           markers = [];
           rectangles = [];
 
-          
           var bounds = new google.maps.LatLngBounds();
           // console.log(bounds);
           // console.log(bounds.b.b, bounds.b.f, bounds.f.b, bounds.f.f);
@@ -84,7 +104,6 @@ function initMap() {
               scaledSize: new google.maps.Size(25, 25)
             };									
 
-           
             markers.push(new google.maps.Marker({
               map: map,
               icon: icon,
@@ -119,21 +138,23 @@ function initMap() {
 
             // 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
 				
-
 				var requestURL = 'http://api.geonames.org/earthquakesJSON?north=' + north + '&south=' + south + '&east=' + east + '&west=' + west + '&username=samdino';
 				var request = new XMLHttpRequest();
-				var count = 0;
-				var latit = [];
-				var longi = [];
-
 				request.open('GET', requestURL);
 				request.responseType = 'json';
 				request.send();
 
+				var count = 0; 
+				var latit = [];
+				var longi = [];
+
 				request.onload = function() {
 
-				var earthquakesList = request.response;
-				showEarthquakes(earthquakesList);
+					var earthquakesList = request.response;
+					showEarthquakes(earthquakesList);
+
+					var earthquakesBounsList = newRequest.response;
+					bonusAnswer(earthquakesBounsList);
 
 				}
 
