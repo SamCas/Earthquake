@@ -23,7 +23,7 @@ function initMap() {
 			var earth = jsonObj['earthquakes'];
 			// console.log(earth.length);
 			for (i = 0; i < earth.length; i++) {
-				// addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
+				addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
 			}
 			// console.log(longi,"-",latit);
 		}
@@ -33,6 +33,18 @@ function initMap() {
           zoom: 4,
           mapTypeId: 'roadmap'
       });
+
+      function addMarker(coords, date, mag, depth, su){
+			  		markerNew = new google.maps.Marker({
+			    	position: coords,
+			    	map: map,
+			    	title: date,
+			    	icon: {
+			         path: google.maps.SymbolPath.CIRCLE,
+			         scale: mag
+			       }
+			  	});
+			}
 
 	     // Create the search box and link it to the UI element.
 	     var input = document.getElementById('place-search');
@@ -45,6 +57,7 @@ function initMap() {
         });
 
         var markers = [];
+        var rectangles = [];
         // Listen for the event fired when the user selects a prediction and retrieve
         // more details for that place.
         searchBox.addListener('places_changed', function() {
@@ -58,7 +71,9 @@ function initMap() {
           markers.forEach(function(marker) {
             marker.setMap(null);
           });
+
           markers = [];
+          rectangles = [];
 
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
@@ -84,15 +99,25 @@ function initMap() {
               position: place.geometry.location
             }));
             
-	         var rectangle = new google.maps.Rectangle({
-		          strokeColor: '#FF0000',
-		          strokeOpacity: 0.8,
-		          strokeWeight: 2,
-		          fillColor: '#FF0000',
-		          fillOpacity: 0.35,
-		          map: map,
-		          bounds: bounds
-		        });
+            rectangles.push(new google.maps.Rectangle({
+            	strokeColor: '#FF0000',
+		         strokeOpacity: 0.8,
+		         strokeWeight: 2,
+		         fillColor: '#FF0000',
+		         fillOpacity: 0.15,
+		         map: map,
+		         bounds: bounds
+            }));
+
+	         // var rectangle = new google.maps.Rectangle({
+		        //   strokeColor: '#FF0000',
+		        //   strokeOpacity: 0.8,
+		        //   strokeWeight: 2,
+		        //   fillColor: '#FF0000',
+		        //   fillOpacity: 0.35,
+		        //   map: map,
+		        //   bounds: bounds
+		        // });
 
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
