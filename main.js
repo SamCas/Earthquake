@@ -14,12 +14,21 @@ newRequest.responseType = 'json';
 newRequest.send();
 
 function bonusAnswer(bonusEarthquakes) {
+	var sortedList = [];
 	var list = bonusEarthquakes['earthquakes'];
+	
 	// var sortedList = sortBy(list, 'magnitude');
 
 	for (i = 0; i < 10; i++) {
-		console.log(list[i].magnitude);
+		addListObject(list[i].datetime, list[i].lat, list[i].lng, list[i].magnitude);
 	}
+}
+
+function addListObject(date, lat, lng, magnitude) {
+	var createLi = document.createElement('LI');
+	var bounsList = 'Date: ' + date + ' Latitude: ' + lat + ' Longitude ' + lng + ' Magnitude ' + magnitude;
+	createLi.append(bounsList);
+	document.getElementById("earthquakes").append(createLi);
 }
 
 function initMap() {
