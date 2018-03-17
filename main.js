@@ -93,7 +93,7 @@ function initMap() {
             }));
             
             // console.log(position);
-            console.log(bounds.getNorthEast().lat());
+            // console.log(bounds.getNorthEast().lat());
             // console.log(markers[0].position.lng());
             // console.log(markers[0].position.lat());
 
