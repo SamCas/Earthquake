@@ -1,15 +1,20 @@
-var requestURL = 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=40.4483&west=-160.38670009999998&username=samdino';
-var request = new XMLHttpRequest();
-var count = 0;
-var latit = [];
-var longi = [];
-
-request.open('GET', requestURL);
-request.responseType = 'json';
-request.send();
-
-
 function initMap() {
+
+	// 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
+	var north = 0.038777;
+	var south = -18.65232900000001;
+	var east =49.4483;
+	var west = -89.38670009999998;
+
+	var requestURL = 'http://api.geonames.org/earthquakesJSON?north=' + north + '&south=' + south + '&east=' + east + '&west=' + west + '&username=samdino';
+	var request = new XMLHttpRequest();
+	var count = 0;
+	var latit = [];
+	var longi = [];
+
+	request.open('GET', requestURL);
+	request.responseType = 'json';
+	request.send();
 
 	request.onload = function() {
 
