@@ -1,6 +1,5 @@
 function initMap() {
 
-
 	function showEarthquakes(jsonObj) {
 
 	var earth = jsonObj['earthquakes'];
@@ -19,7 +18,6 @@ function initMap() {
 
 	var infowindow = new google.maps.InfoWindow();
 
-
 	function addMarker(coords, date, mag, depth, su){
 	markerNew = new google.maps.Marker({
 		position: coords,
@@ -36,7 +34,6 @@ function initMap() {
 		});
 	}
 
-
 	var input = document.getElementById('place-search');
 	var searchBox = new google.maps.places.SearchBox(input);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -51,12 +48,12 @@ function initMap() {
 
 
 	searchBox.addListener('places_changed', function() {
+
 		var places = searchBox.getPlaces();
 
 		if (places.length == 0) {
 			return;
 		}
-
 
 		markers.forEach(function(marker) {
 			marker.setMap(null);
@@ -64,7 +61,6 @@ function initMap() {
 
 		markers = [];
 		rectangles = [];
-
 
 		var bounds = new google.maps.LatLngBounds();
 		// console.log(bounds);
@@ -83,7 +79,6 @@ function initMap() {
 				anchor: new google.maps.Point(17, 34),
 				scaledSize: new google.maps.Size(25, 25)
 			};									
-
 
 			markers.push(new google.maps.Marker({
 				map: map,
@@ -114,7 +109,7 @@ function initMap() {
 				south: south,
 				east: east,
 				west: west
-			}
+				}
 			}));
 
 			// 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
