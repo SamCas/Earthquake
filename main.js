@@ -1,23 +1,27 @@
 function initMap() {
 
+	// Starting a function to add the marker and passing the data.
 	function showEarthquakes(jsonObj) {
 
-	var earth = jsonObj['earthquakes'];
-	// console.log(earth.length);
-		for (i = 0; i < earth.length; i++) {
-			addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
-		}
-	// console.log(longi,"-",latit);
+		var earth = jsonObj['earthquakes'];
+		// console.log(earth.length);
+			for (i = 0; i < earth.length; i++) {
+				addMarker({lat:earth[i].lat, lng:earth[i].lng}, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
+			}
+		// console.log(longi,"-",latit);
 	}
 
+	// Map initialization.
 	var map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 38.322, lng: 142.369},
 		zoom: 4,
 		mapTypeId: 'roadmap'
 	});
 
+	// Info-window initialization.
 	var infowindow = new google.maps.InfoWindow();
 
+	// Adding a marker after searching place with a costume info-window.
 	function addMarker(coords, date, mag, depth, su){
 	markerNew = new google.maps.Marker({
 		position: coords,
@@ -34,6 +38,7 @@ function initMap() {
 		});
 	}
 
+	// searchBox initialization and declaring the input.
 	var input = document.getElementById('place-search');
 	var searchBox = new google.maps.places.SearchBox(input);
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -46,7 +51,7 @@ function initMap() {
 	var markers = [];
 	var rectangles = [];
 
-
+	// Starting a function to search places.
 	searchBox.addListener('places_changed', function() {
 
 		var places = searchBox.getPlaces();
@@ -60,7 +65,6 @@ function initMap() {
 		});
 
 		markers = [];
-		rectangles = [];
 
 		var bounds = new google.maps.LatLngBounds();
 		// console.log(bounds);
