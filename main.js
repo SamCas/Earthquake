@@ -1,36 +1,3 @@
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth() + 1; //January is 0!
-var yyyy = today.getFullYear();
-var h = today.getHours();
-var m = today.getMinutes();
-var s = today.getSeconds();
-var dateFormat = yyyy + '-' + '0' + mm + '-' + dd;
-var dateFormat1 = yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s;
-var dateFormat2 = (yyyy - 1) + '-' + '0' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s;
-
-var newRequestURL = 'http://api.geonames.org/earthquakesJSON?maxRows=500&datemagnitude=' + dateFormat + '&north=90&south=-90&east=-179.99999&west=179.99999&username=samdino';
-var newRequest = new XMLHttpRequest();
-newRequest.open('GET', newRequestURL);
-newRequest.responseType = 'json';
-newRequest.send();
-
-function bonusAnswer(bonusEarthquakes) {
-  var sortedList = [];
-  var list = bonusEarthquakes.earthquakes;
-
-  for (i = 0; i < 10; i++) {
-    addListObject(list[i].datetime, list[i].lat, list[i].lng, list[i].magnitude);
-  }
-}
-
-function addListObject(date, lat, lng, magnitude) {
-  var createLi = document.createElement('LI');
-  var bounsList = 'Date: ' + date + ' Latitude: ' + lat + ' Longitude ' + lng + ' Magnitude ' + magnitude;
-  createLi.append(bounsList);
-  document.getElementById('earthquakes').append(createLi);
-}
-
 function initMap() {
 
   function showEarthquakes(jsonObj) {
@@ -86,7 +53,6 @@ function initMap() {
   });
 
   var markers = [];
-  var rectangles = [];
 
   searchBox.addListener('places_changed', function () {
     var places = searchBox.getPlaces();
@@ -100,7 +66,6 @@ function initMap() {
     });
 
     markers = [];
-    rectangles = [];
 
     var bounds = new google.maps.LatLngBounds();
 
@@ -127,11 +92,7 @@ function initMap() {
         position: place.geometry.location,
       }));
 
-      // console.log(position);
-      // console.log(bounds.getNorthEast().lat());
-      // console.log(markers[0].position.lng());
-      // console.log(markers[0].position.lat());
-
+      // Adding x, y values to the markes to create the rectangle.
       var north = markers[0].position.lat() + 1.4;
       var south = markers[0].position.lat() - 1.4;
       var east = markers[0].position.lng() + 1.4;
@@ -152,7 +113,7 @@ function initMap() {
         },
       }));
 
-      // 'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
+      //TODO: Origianl unmodify link.  'http://api.geonames.org/earthquakesJSON?north=0.038777&south=-18.65232900000001&east=49.4483&west=-89.38670009999998&username=samdino'
 
       var requestURL = 'http://api.geonames.org/earthquakesJSON?north=' + north + '&south=' + south + '&east=' + east + '&west=' + west + '&username=samdino';
       var request = new XMLHttpRequest();
@@ -169,9 +130,6 @@ function initMap() {
         var earthquakesList = request.response;
         showEarthquakes(earthquakesList);
 
-        var earthquakesBounsList = newRequest.response;
-        bonusAnswer(earthquakesBounsList);
-
       };
 
       if (place.geometry.viewport) {
@@ -183,4 +141,44 @@ function initMap() {
 
     map.fitBounds(bounds);
   });
+}
+
+function topTenEarthquakes() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  var dateFormat = yyyy + '-' + '0' + mm + '-' + dd;
+  var dateFormat1 = yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s;
+  var dateFormat2 = (yyyy - 1) + '-' + '0' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s;
+
+  var newRequestURL = 'http://api.geonames.org/earthquakesJSON?maxRows=500&datemagnitude=' + dateFormat + '&north=90&south=-90&east=-179.99999&west=179.99999&username=samdino';
+  var newRequest = new XMLHttpRequest();
+  newRequest.open('GET', newRequestURL);
+  newRequest.responseType = 'json';
+  newRequest.send();
+
+  newRequest.onload = function () {
+    var earthquakesBounsList = newRequest.response;
+    bonusAnswer(earthquakesBounsList);
+  };
+
+  function bonusAnswer(bonusEarthquakes) {
+    var sortedList = [];
+    var list = bonusEarthquakes.earthquakes;
+
+    for (i = 0; i < 10; i++) {
+      addListObject(list[i].datetime, list[i].lat, list[i].lng, list[i].magnitude);
+    }
+  }
+
+  function addListObject(date, lat, lng, magnitude) {
+    var createLi = document.createElement('LI');
+    var bounsList = 'Date: ' + date + ' Latitude: ' + lat + ' Longitude ' + lng + ' Magnitude ' + magnitude;
+    createLi.append(bounsList);
+    document.getElementById('earthquakes').append(createLi);
+  }
 }
