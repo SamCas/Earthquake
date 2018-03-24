@@ -11,10 +11,10 @@ function topTenEarthquakes() {
   // var dateFormat1 = yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s;
   // var dateFormat2 = (yyyy - 1) + '-' + '0' + mm + '-' + dd + ' ' + h + ':' + m + ':' + s;
 
-  var newRequestURL = 'http://api.geonames.org/earthquakesJSON?maxRows=500&datemagnitude=' + dateFormat + '&north=90&south=-90&east=-179.99999&west=179.99999&username=samdino';
+  var newRequestURL = 'http://api.geonames.org/earthquakesJSON?maxRows=500&datemagnitude=' + '&north=90&south=-90&east=-179.99999&west=179.99999&username=samdino';
   var newRequest = new XMLHttpRequest();
   newRequest.open('GET', newRequestURL);
-  newRequest.responseType = 'JSON';
+  newRequest.responseType = 'json';
   newRequest.send();
 
   newRequest.onload = function () {
@@ -23,6 +23,7 @@ function topTenEarthquakes() {
   };
 
   function bonusAnswer(bonusEarthquakes) {
+    var list = bonusAnswer.earthquakes;
     for (i = 0; i < 10; i++) {
       addListObject(list[i].datetime, list[i].lat, list[i].lng, list[i].magnitude);
     }
@@ -49,8 +50,6 @@ function initMap() {
         lng: earth[i].lng,
       }, earth[i].datetime, earth[i].magnitude, earth[i].depth, earth[i].src);
     }
-
-    // console.log(longi,"-",latit);
   }
 
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -108,8 +107,6 @@ function initMap() {
 
     var bounds = new google.maps.LatLngBounds();
 
-    // console.log(bounds);
-    // console.log(bounds.b.b, bounds.b.f, bounds.f.b, bounds.f.f);
     places.forEach(function (place) {
       if (!place.geometry) {
         console.log('Returned place contains no geometry');
@@ -157,7 +154,7 @@ function initMap() {
       var requestURL = 'http://api.geonames.org/earthquakesJSON?north=' + north + '&south=' + south + '&east=' + east + '&west=' + west + '&username=samdino';
       var request = new XMLHttpRequest();
       request.open('GET', requestURL);
-      request.responseType = 'JSON';
+      request.responseType = 'json';
       request.send();
 
       request.onload = function () {
